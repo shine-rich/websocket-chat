@@ -37,5 +37,8 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.6.1"
+  },
+  "volta": {
+    "node": "9.6.1"
   }
 }
