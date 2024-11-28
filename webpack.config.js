@@ -1,44 +1,58 @@
-const webpack = require('webpack')
-const path = require('path')
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: [
-    'react-hot-loader/patch',
-    'webpack-dev-server/client?http://localhost:3001',
-    'webpack/hot/only-dev-server',
-    path.resolve(__dirname, 'client', 'index.jsx')
-  ],
+  mode: 'production',
+  entry: './src/index.tsx',
   resolve: {
-    modules: [path.resolve(__dirname, 'node_modules')],
-    extensions: ['*', '.js', '.jsx']
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    alias: {
+      'react-dom': '@hot-loader/react-dom'
+    }
+  },
+  output: {
+    path: __dirname + '/dist',
+    publicPath: '/',
+    filename: 'bundle.js'
+  },
+  devServer: {
+    contentBase: './dist',
   },
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
+        use: ['babel-loader', 'source-map-loader'],
         exclude: /node_modules/,
-        use: ['babel-loader']
-      }
-    ]
-  },
-  output: {
-    path: path.resolve(__dirname, 'public'),
-    publicPath: '/',
-    filename: 'bundle.js'
+      },
+      {
+        test: /\.tsx?$/,
+        use: ['babel-loader', 'awesome-typescript-loader'],
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', { loader: 'css-loader', options: { importLoaders: 1 } }],
+      },
+      {
+        test: /\.(scss|sass)$/,
+        loaders: [
+          'style-loader',
+          { loader: 'css-loader', options: { importLoaders: 1 } },
+          'sass-loader',
+        ],
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loaders: [
+          'file-loader?hash=sha512&digest=hex&name=img/[hash].[ext]',
+          'image-webpack-loader?bypassOnDebug&optipng.optimizationLevel=7&gifsicle.interlaced=false',
+        ],
+      },
+    ],
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"development"'
-      }
-    })
-  ],
-  devServer: {
-    port: 3001,
-    contentBase: path.resolve(__dirname, 'public'),
-    hot: true,
-    historyApiFallback: true
-  },
-  devtool: 'source-map'
+    new HtmlWebpackPlugin({
+      template:  path.resolve('./src/index.html'),
+    }),
+  ]
 };
