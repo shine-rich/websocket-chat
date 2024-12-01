@@ -1,7 +1,7 @@
 const io = require('socket.io-client')
 
 export default function () {
-  const socket = io.connect('http://rural-crystal-memorialized-6fca819b.koyeb.app/')
+  const socket = io.connect('http://localhost:3000')
 
   function registerHandler(onMessageReceived) {
     socket.on('message', onMessageReceived)
