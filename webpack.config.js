@@ -4,7 +4,7 @@ const path = require('path')
 module.exports = {
   entry: [
     'react-hot-loader/patch',
-    'webpack-dev-server/client?https://group-counseling.netlify.app/',
+    'webpack-dev-server/client?http://localhost:3001',
     'webpack/hot/only-dev-server',
     path.resolve(__dirname, 'client', 'index.jsx')
   ],
