@@ -1,7 +1,9 @@
 const io = require('socket.io-client')
 
 export default function () {
-  const socket = io.connect('http://localhost:3000')
+  // change localhost to public ip when deployed on server
+  // port 3002 should be consistent with port defined in /server/server.js
+  const socket = io.connect('http://localhost:3002/')
 
   function registerHandler(onMessageReceived) {
     socket.on('message', onMessageReceived)

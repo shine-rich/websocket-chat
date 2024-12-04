@@ -4,7 +4,9 @@ const path = require('path')
 module.exports = {
   entry: [
     'react-hot-loader/patch',
-    'webpack-dev-server/client?http://localhost:3001',
+    // change localhost to public ip when deployed on server
+    // port 3001 should be consistent with that defined in devServer below
+    'webpack-dev-server/client?http://localhost:3001', 
     'webpack/hot/only-dev-server',
     path.resolve(__dirname, 'client', 'index.jsx')
   ],
